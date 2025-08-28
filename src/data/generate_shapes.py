@@ -33,13 +33,17 @@ def draw_shape(img_size: int, k: int, slight: dict, fill: bool = True):
                 cy - rad + slight["ty"]*(img_size/2),
                 cx + rad + slight["tx"]*(img_size/2),
                 cy + rad + slight["ty"]*(img_size/2)]
-        if fill: dr.ellipse(bbox, fill=255)
-        else:    dr.ellipse(bbox, outline=255, width=slight["thickness"])
+        if fill:
+            dr.ellipse(bbox, fill=255)
+        else:
+            dr.ellipse(bbox, outline=255, width=slight["thickness"])
         return im
     verts = regular_polygon_vertices(k, 0.85 * (1.0 - slight["scale_jitter"]), slight["rotation"])
     px = [xy_to_px(v, img_size, img_size/2, img_size/2, 1.0, slight["tx"], slight["ty"]) for v in verts]
-    if fill: dr.polygon(px, fill=255)
-    else:    dr.polygon(px, outline=255, width=slight["thickness"])
+    if fill:
+        dr.polygon(px, fill=255)
+    else:
+        dr.polygon(px, outline=255, width=slight["thickness"])
     return im
 
 
@@ -79,7 +83,7 @@ def _save_class_grid(Xc: np.ndarray, img_size: int, out_png: str, n_show: int = 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--num-classes", type=int, default=DEFAULT_NUM_CLASSES,
-                    help="Total classes including circle as last.")
+                    help="Total classes including circle as last")
     ap.add_argument("--images-per-class", type=int, default=3000)
     ap.add_argument("--img-size", type=int, default=DEFAULT_IMG_SIZE)
     ap.add_argument("--out", type=str, default="outputs/datasets/shapes.npz")
@@ -136,6 +140,7 @@ def main():
         out_png = fig_dir / f"class_{ci}_{name}.png"
         _save_class_grid(Xc, args.img_size, str(out_png), n_show=args.viz_per_class, cols=args.viz_cols)
     print(f"Saved per-class grids to: {fig_dir}")
+
 
 if __name__ == "__main__":
     main()
