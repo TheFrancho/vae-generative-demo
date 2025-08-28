@@ -37,7 +37,7 @@ For each step described above we have a script to handle it, also outputting dif
 For generating the dataset you can run the script
 
 ```
-python -m src.data.generate_shapes
+python -m src.data.generate_shapes \
   --num-classes 5 \
   --images-per-class 3000 \
   --img-size 64 \

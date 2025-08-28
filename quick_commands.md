@@ -6,7 +6,7 @@ Summarized commands from README file to run the full pipeline
 ## For generating the dataset
 
 ```
-python -m src.data.generate_shapes
+python -m src.data.generate_shapes \
   --num-classes 5 \
   --images-per-class 3000 \
   --img-size 64 \
