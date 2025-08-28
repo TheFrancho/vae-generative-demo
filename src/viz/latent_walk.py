@@ -19,20 +19,25 @@ def _to_one_hot(y_idx, num_classes, device):
 def _decode_grid(model, y_oh, zmin, zmax, steps, out_png):
     zs = []
     lin = np.linspace(zmin, zmax, steps)
+
     for i in range(steps):
         for j in range(steps):
             zs.append([lin[i], lin[j]])
     z = torch.tensor(zs, dtype=torch.float32, device=y_oh.device)
     y_rep = y_oh.repeat(steps*steps, 1)
+
     with torch.no_grad():
         x_hat = model.decode(z, y_rep).cpu().numpy()
+
     imgs = x_hat[:,0]
     H,W = imgs.shape[-2], imgs.shape[-1]
     canvas = np.zeros((steps*H, steps*W), dtype=np.float32)
     k = 0
+
     for i in range(steps):
         for j in range(steps):
             canvas[i*H:(i+1)*H, j*W:(j+1)*W] = imgs[k]; k+=1
+
     plt.figure(figsize=(6,6))
     plt.imshow(canvas, cmap="gray", vmin=0, vmax=1); plt.axis("off")
     Path(out_png).parent.mkdir(parents=True, exist_ok=True)
@@ -136,6 +141,7 @@ def main():
             big_frames += frames
         _save_gif(big_frames, f"{args.outdir}/sequence_random.gif", fps=args.fps)
         return
+
 
 if __name__ == "__main__":
     main()

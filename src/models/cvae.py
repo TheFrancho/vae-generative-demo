@@ -17,9 +17,12 @@ class CVAE(nn.Module):
         def enc_block(in_ch, out_ch):
             return nn.Sequential(nn.Conv2d(in_ch, out_ch, 3, padding=1), nn.BatchNorm2d(out_ch), nn.ReLU())
         self.enc = nn.Sequential(
-            enc_block(1 + 1, 32), nn.MaxPool2d(2),
-            enc_block(32, 64),    nn.MaxPool2d(2),
-            enc_block(64, 128),   nn.AdaptiveAvgPool2d(1),
+            enc_block(1 + 1, 32),
+            nn.MaxPool2d(2),
+            enc_block(32, 64),
+            nn.MaxPool2d(2),
+            enc_block(64, 128),
+            nn.AdaptiveAvgPool2d(1),
         )
         self.mu = nn.Linear(128, z_dim)
         self.logvar = nn.Linear(128, z_dim)

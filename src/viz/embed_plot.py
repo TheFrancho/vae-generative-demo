@@ -12,7 +12,6 @@ import umap
 
 def _save_scatter(X2, y, outpath, title, legend_labels=None, add_legend=True, cmap_name="tab10"):
     plt.figure(figsize=(6.6, 5.4))
-
     scatter = plt.scatter(X2[:, 0], X2[:, 1], c=y, s=6, alpha=0.85, cmap=cmap_name)
     plt.title(title)
     plt.tight_layout()

@@ -39,14 +39,15 @@ def main():
     for epoch in range(1, args.epochs+1):
         model.train()
         train_losses = []
-        for x,y,_ in tqdm(train_Dataloader, desc=f"train epoch {epoch}"):
-            x,y = x.to(device), y.to(device)
+        for x, y, _ in tqdm(train_Dataloader, desc=f"train epoch {epoch}"):
+            x, y = x.to(device), y.to(device)
             opt.zero_grad()
             logits, _ = model(x)
             loss = crit(logits, y)
-            loss.backward(); opt.step()
+            loss.backward()
+            opt.step()
             train_losses.append(loss.item())
-        train_loss = sum(train_losses)/len(train_losses)
+        train_loss = sum(train_losses) / len(train_losses)
 
         model.eval()
         val_losses, y_true, y_pred = [], [], []
@@ -59,7 +60,7 @@ def main():
                 y_true.append(y.cpu())
                 y_pred.append(logits.argmax(1).cpu())
 
-        val_loss = sum(val_losses)/len(val_losses)
+        val_loss = sum(val_losses) / len(val_losses)
         last_val = val_loss
         y_true = torch.cat(y_true).numpy()
         y_pred = torch.cat(y_pred).numpy()
@@ -76,6 +77,7 @@ def main():
                     x = x.to(device)
                     _, feats = model(x)
                     feats_list.append(feats.cpu())
+
             torch.save({"features": torch.cat(feats_list), "labels": torch.tensor(y_true)},
                        f"{args.outdir}/features_val.pt")
             best_msg = f"[BEST] epoch {epoch}: val_loss={val_loss:.4f}, f1_macro={f1_macro:.4f} -> saved cnn_best.pt & features_val.pt"
@@ -84,7 +86,9 @@ def main():
             print(f"epoch {epoch}: train_loss={train_loss:.4f} | val_loss={val_loss:.4f} | f1_macro={f1_macro:.4f}")
 
     print(f"\nFinal: last_val_loss={last_val:.4f} | best_val_loss={best_val:.4f}")
-    if best_msg: print(best_msg)
+    if best_msg:
+        print(best_msg)
+
 
 if __name__ == "__main__":
     main()

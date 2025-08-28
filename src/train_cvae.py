@@ -63,11 +63,14 @@ def main():
             opt.zero_grad()
             x_hat, mu, logvar = model(x, y_oh)
             loss, recon, kl = loss_vae(x_hat, x, mu, logvar, beta=beta)
-            loss.backward(); opt.step()
-            tr_losses.append(loss.item()); tr_recons.append(recon.item()); tr_kls.append(kl.item())
-        tr_elbo = sum(tr_losses)/len(tr_losses)
-        tr_recon = sum(tr_recons)/len(tr_recons)
-        tr_kl = sum(tr_kls)/len(tr_kls)
+            loss.backward()
+            opt.step()
+            tr_losses.append(loss.item())
+            tr_recons.append(recon.item())
+            tr_kls.append(kl.item())
+        tr_elbo = sum(tr_losses) / len(tr_losses)
+        tr_recon = sum(tr_recons) / len(tr_recons)
+        tr_kl = sum(tr_kls) / len(tr_kls)
 
         model.eval()
         va_losses, va_recons, va_kls = [], [], []
@@ -77,16 +80,18 @@ def main():
                 x, y_oh = x.to(device), y_oh.to(device)
                 x_hat, mu, logvar = model(x, y_oh)
                 l, r, k = loss_vae(x_hat, x, mu, logvar, beta=args.beta)
-                va_losses.append(l.item()); va_recons.append(r.item()); va_kls.append(k.item())
+                va_losses.append(l.item())
+                va_recons.append(r.item())
+                va_kls.append(k.item())
 
                 xb = (x > 0.5).float()
                 xhb = (x_hat > 0.5).float()
                 dices.append(dice_score(xhb, xb).item())
 
-        va_elbo = sum(va_losses)/len(va_losses)
-        va_recon = sum(va_recons)/len(va_recons)
-        va_kl = sum(va_kls)/len(va_kls)
-        va_dice = sum(dices)/len(dices)
+        va_elbo = sum(va_losses) / len(va_losses)
+        va_recon = sum(va_recons) / len(va_recons)
+        va_kl = sum(va_kls) / len(va_kls)
+        va_dice = sum(dices) / len(dices)
         last_val = va_elbo
 
         if va_elbo < best_val:
