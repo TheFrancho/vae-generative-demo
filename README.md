@@ -1,6 +1,6 @@
 # VAE generative demo
 
-This repository contains the demo presented at AI Tinkerers (August 2025)
+This repository contains the code presented at Pereira Tech Talks Lighting Talk (October 2025) and AI Tinkerers Pereira demo showcase (August 2025)
 
 The goal is to illustrate the essence of generative AI: mimicking a data distribution from a limited set of samples
 
