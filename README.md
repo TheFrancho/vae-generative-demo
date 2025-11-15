@@ -1,6 +1,10 @@
 # VAE generative demo
 
-This repository contains the code presented at Pereira Tech Talks Lighting Talk (October 2025) and AI Tinkerers Pereira demo showcase (August 2025)
+![Sequence Order 5 edges](./statics/sequence_order.gif) 
+![Random Order 5 edges](./statics/sequence_random.gif)
+
+
+This repository contains the code presented at Pereira Tech Talks Lighting Talk (November 2025) and AI Tinkerers Pereira demo showcase (August 2025)
 
 The goal is to illustrate the essence of generative AI: mimicking a data distribution from a limited set of samples
 
