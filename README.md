@@ -1,7 +1,7 @@
 # VAE generative demo
 
-![Sequence Order 5 edges](./statics/sequence_order.gif) 
-![Random Order 5 edges](./statics/sequence_random.gif)
+![Sequence Order 5 edges](./statics/sequence_order_loop.gif) 
+![Random Order 5 edges](./statics/sequence_random_loop.gif)
 
 
 This repository contains the code presented at Pereira Tech Talks Lighting Talk (November 2025) and AI Tinkerers Pereira demo showcase (August 2025)
